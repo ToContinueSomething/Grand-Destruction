@@ -108,5 +108,9 @@ public class Target : MonoBehaviour, IMovable
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(_camera.ScreenToWorldPoint(_lowerRightPosition), 0.5f);
+        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(_camera.ScreenToWorldPoint(_rectTransform.position), 0.5f);
+        
     }
 }

@@ -6,14 +6,8 @@ public class InputRouter : MonoBehaviour
     private PlayerInput _input;
 
     public event Action Clicked;
-
-    private void Awake()
-    {
-        _input = new PlayerInput();
-        _input.Player.Click.performed += context => OnClicked();
-    }
     
-
+    
     private void OnClicked()
     {
         Clicked?.Invoke();
@@ -21,7 +15,9 @@ public class InputRouter : MonoBehaviour
 
     public void Enable()
     {
+        _input = new PlayerInput();
         _input.Enable();
+        _input.Player.Click.performed += context => OnClicked();
     }
 
     public void Disable()

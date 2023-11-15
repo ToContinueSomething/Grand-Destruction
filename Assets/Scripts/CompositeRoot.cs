@@ -1,4 +1,3 @@
-using System;
 using StateMachine;
 using UnityEngine;
 
@@ -13,8 +12,7 @@ namespace DefaultNamespace
         [SerializeField] private TargetStateMachine _targetStateMachine;
         [SerializeField] private Raycaster _raycaster;
         [SerializeField] private CameraMovement _cameraMovement;
-
-
+        
         private void OnEnable()
         {
             _inputRouter.Enable();
@@ -38,29 +36,25 @@ namespace DefaultNamespace
         private void OnTargetStateMachineFinished()
         {
             _anchor.SetPosition(Vector3.zero);
-            _cameraMovement.Move();
+            _cameraMovement.MoveNext();
         }
 
         private void Start()
         {
-            _target.Init(_entity.MinPositionBound,_entity.MaxPositionBound);
+        }
+
+        private void SetTarget()
+        {
+            _target.gameObject.SetActive(true);
+            _target.Init(_entity.MinPositionBound, _entity.MaxPositionBound);
             _targetStateMachine.EnterState();
         }
 
         private void OnClicked()
         {
+            _cameraMovement.MoveNext();
             _targetStateMachine.NextState();
-            _raycaster.Raycast(_target.Position);
-        }
-    }
-
-    internal class CameraMovement : MonoBehaviour
-    {
-        public event Action Finished;
-
-        public void Move()
-        {
-            
+           // _raycaster.Raycast(_target.Position);
         }
     }
 }
