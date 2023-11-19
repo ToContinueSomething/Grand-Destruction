@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Sources.Infrastructure.Services;
+using Sources.Infrastructure.Services.SaveLoad;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,7 +19,13 @@ internal class CameraMovement : MonoBehaviour
     public event Action Finished;
     
     Coroutine _trackingBlend;
-    
+    private ISaveLoadService _saveLoadService;
+
+    private void Awake()
+    {
+        _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
+    }
+
     public void MoveNext()
     {
         _currentIndex++;
@@ -27,7 +35,8 @@ internal class CameraMovement : MonoBehaviour
         
         _camers[_currentIndex - 1].gameObject.SetActive(false);
         _cinemachineBrain.m_CameraActivatedEvent.AddListener(OnCameraActivated);
-      
+        _saveLoadService.SaveProgress();
+        Debug.Log("Save");
     }
 
    private void OnCameraActivated(ICinemachineCamera newCamera, ICinemachineCamera previousCamera)

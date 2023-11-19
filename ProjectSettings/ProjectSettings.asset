@@ -915,7 +915,13 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -935,11 +941,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: acbfaf61-73ea-4779-ad7e-28464d9b4bba
+  cloudProjectId: 9e75fc2e-ddad-4fa6-8997-f833169dd226
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: PixelGame
-  organizationId: dipzer97
+  organizationId: countergamedev
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
