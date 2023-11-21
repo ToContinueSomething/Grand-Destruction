@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ForestLevelMapMaker.Scripts;
 using Sources.Infrastructure.Services;
 using Sources.Infrastructure.Services.PersistentProgress;
 using Sources.Services;
@@ -11,5 +12,6 @@ namespace Sources.Infrastructure.Factory
         List<ISavedProgress> SavedProgressWriters { get; }
         List<ISavedProgressReader> SavedProgressReaders { get; }
         void Cleanup();
+        ILevelMap CreateLevelMap();
     }
 }

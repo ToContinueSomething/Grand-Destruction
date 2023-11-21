@@ -1,12 +1,13 @@
 using Sources.Data;
 using Sources.Infrastructure.Services.PersistentProgress;
 using Sources.Infrastructure.Services.SaveLoad;
-using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Sources.Infrastructure.States
 {
-    public class LoadProgressState : IPayloadedState<string>
+    public class LoadProgressState : IState
     {
+        private const string NameLevelMapScene = "LevelMap";
         private readonly GameStateMachine _gameStateMachine;
         private readonly IPersistentProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
@@ -18,10 +19,10 @@ namespace Sources.Infrastructure.States
             _saveLoadService = saveLoadService;
         }
 
-        public void Enter(string nameScene)
+        public void Enter()
         {
             LoadProgressOrInitNew();
-            _gameStateMachine.Enter<LoadLevelState,string>(nameScene);
+            _gameStateMachine.Enter<LoadLevelMapState,string>(NameLevelMapScene);
         }
 
         private void LoadProgressOrInitNew()
@@ -31,14 +32,12 @@ namespace Sources.Infrastructure.States
 
         private PlayerProgress GetNewProgress()
         {
-            return new PlayerProgress();
+            return new PlayerProgress(SceneManager.sceneCountInBuildSettings - 1);
         }
 
         public void Exit()
         {
             
         }
-
-        
     }
 }

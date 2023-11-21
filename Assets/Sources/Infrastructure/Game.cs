@@ -8,9 +8,9 @@ namespace Sources.Infrastructure
     {
         public GameStateMachine GameStateMachine;
 
-        public Game(ICoroutineRunner coroutineRunner, LoadingCurtain loadingCurtain, LevelMapLoader loaderLevelMap)
+        public Game(ICoroutineRunner coroutineRunner, LoadingCurtain loadingCurtain)
         {
-            GameStateMachine = new GameStateMachine(new SceneLoader(coroutineRunner),loadingCurtain, AllServices.Container, loaderLevelMap);
+            GameStateMachine = new GameStateMachine(new SceneLoader(coroutineRunner),loadingCurtain, AllServices.Container);
         }
     }
 }
