@@ -12,7 +12,6 @@ namespace Sources.Logic
         public void Hide()
         {
             
-            
         }
     }
 }

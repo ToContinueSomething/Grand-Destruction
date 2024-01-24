@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,12 +20,6 @@ namespace Sources.Infrastructure
 
         private IEnumerator LoadScene(string nameScene, Action onLoaded = null)
         {
-            if (SceneManager.GetActiveScene().name == nameScene)
-            {
-                onLoaded?.Invoke();
-                yield break;
-            }
-            
             AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(nameScene);
 
             while (waitNextScene.isDone == false)

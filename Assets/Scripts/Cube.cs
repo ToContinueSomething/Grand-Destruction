@@ -19,8 +19,7 @@ public class Cube : MonoBehaviour
             return;
 
         _detouched = true;
-        GetComponentInParent<Entity>().DetouchCube(this);
-        GetComponent<ColorCube>().ApplyDetouchColor();
+        GetComponentInParent<Entity>()?.DetouchCube(this);
     }
 
     public void Destroy()

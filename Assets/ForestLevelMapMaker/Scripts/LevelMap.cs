@@ -65,7 +65,6 @@ namespace Mkey
 
         void Start()
         {
-            Debug.Log("Map controller started");
             if (mapMaker == null) mapMaker = GetComponent<MapMaker>();
 
             if (mapMaker == null)
@@ -105,7 +104,6 @@ namespace Mkey
                 {
                     currentLevel = scene;
                     if (MSound) MSound.SoundPlayClick(0, null);
-                    Debug.Log("load scene : " + scene);
                     _selectedSceneIndex = scene;
                     Selected?.Invoke(_selectedSceneIndex);
 

@@ -1,7 +1,7 @@
 using System;
-using UnityEngine;
+using Sources.Services.Input;
 
-namespace Sources.Services.Input
+namespace Sources.Infrastructure.Services.Input
 {
     public class InputService : IInputService
     {

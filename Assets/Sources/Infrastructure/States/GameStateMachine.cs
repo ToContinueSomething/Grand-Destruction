@@ -6,10 +6,11 @@ using Sources.Infrastructure.Services.Inform;
 using Sources.Infrastructure.Services.PersistentProgress;
 using Sources.Infrastructure.Services.SaveLoad;
 using Sources.Logic;
+using Sources.Logic.UI.Services.Factory;
 
 namespace Sources.Infrastructure.States
 {
-    public class GameStateMachine
+    public class GameStateMachine : IGameStateMachine
     {
         private readonly Dictionary<Type,IExitableState> _states;
         private IExitableState _activeState;
@@ -22,7 +23,9 @@ namespace Sources.Infrastructure.States
                 [typeof(EntryState)] = new EntryState(this, sceneLoader, services),
                 [typeof(LoadProgressState)] = new LoadProgressState(this,services.Single<IPersistentProgressService>(),services.Single<ISaveLoadService>()),
                 [typeof(LoadLevelMapState)] = new LoadLevelMapState(this,sceneLoader,services.Single<IGameFactory>(),services.Single<IInformProgressReaderService>()),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader,loadingCurtain, services.Single<IGameFactory>(),services.Single<IPersistentProgressService>(), services.Single<IInformProgressReaderService>())
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader,loadingCurtain, 
+                    services.Single<IGameFactory>(),services.Single<IPersistentProgressService>(),
+                    services.Single<IInformProgressReaderService>(),services.Single<IUIFactory>()),
             };
         }
 

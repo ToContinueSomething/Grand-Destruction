@@ -7,15 +7,16 @@ using UnityEngine.SceneManagement;
 
 namespace Sources.Infrastructure.States
 {
-    public class LoadLevelMapState : IPayloadedState<string>
+    public class LoadLevelMapState : IState
     {
         private const int SkipIndex = 1;
+        private const string NameScene = "LevelMap";
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly IGameFactory _gameFactory;
         private readonly IInformProgressReaderService _informProgressReaderService;
 
-        public LoadLevelMapState(GameStateMachine gameStateMachine,SceneLoader sceneLoader, IGameFactory gameFactory,
+        public LoadLevelMapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, IGameFactory gameFactory,
             IInformProgressReaderService informProgressReaderService)
         {
             _gameStateMachine = gameStateMachine;
@@ -28,9 +29,9 @@ namespace Sources.Infrastructure.States
         {
         }
 
-        public void Enter(string nameScene)
+        public void Enter()
         {
-            _sceneLoader.Load(nameScene,OnLoaded);
+            _sceneLoader.Load(NameScene, OnLoaded);
         }
 
         private void OnLoaded()

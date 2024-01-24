@@ -7,7 +7,6 @@ namespace Sources.Infrastructure.States
 {
     public class LoadProgressState : IState
     {
-        private const string NameLevelMapScene = "LevelMap";
         private readonly GameStateMachine _gameStateMachine;
         private readonly IPersistentProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
@@ -22,7 +21,7 @@ namespace Sources.Infrastructure.States
         public void Enter()
         {
             LoadProgressOrInitNew();
-            _gameStateMachine.Enter<LoadLevelMapState,string>(NameLevelMapScene);
+            _gameStateMachine.Enter<LoadLevelMapState>();
         }
 
         private void LoadProgressOrInitNew()
@@ -32,7 +31,11 @@ namespace Sources.Infrastructure.States
 
         private PlayerProgress GetNewProgress()
         {
-            return new PlayerProgress(SceneManager.sceneCountInBuildSettings - 1);
+            PlayerProgress playerProgress = new PlayerProgress(SceneManager.sceneCountInBuildSettings - 1);
+            playerProgress.AnchorStats.Attempts = 3;
+            playerProgress.AnchorStats.Radius = 5f;
+            
+            return playerProgress;
         }
 
         public void Exit()

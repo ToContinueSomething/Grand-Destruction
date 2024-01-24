@@ -5,12 +5,12 @@ namespace Sources.Data
     [Serializable]
     public class PlayerProgress
     {
-        public ParameterData ParameterData;
+        public Stats AnchorStats;
         public LevelMapData LevelMapData;
 
         public PlayerProgress(int countLevels)
         {
-            ParameterData = new ParameterData();
+            AnchorStats = new Stats();
             LevelMapData = new LevelMapData(countLevels);
         }
     }

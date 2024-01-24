@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using DefaultNamespace;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -10,13 +9,17 @@ public class Entity : MonoBehaviour
     private int[,,] _cubesInfo;
     private Vector3 _cubesInfoStartPosition;
     private Cube[] _cubes;
-    
+
+  
+
     private Vector3 _maxPositionBound;
     private Vector3 _minPositionBound;
 
     public Vector3 MaxPositionBound => transform.TransformPoint(_maxPositionBound);
     public Vector3 MinPositionBound => transform.TransformPoint(_minPositionBound);
-    
+    public bool IsDestroy => transform.childCount <= 1;
+    public int CountCubes => transform.childCount;
+
     public event Action<Entity> CreatedNewEntity;
     public event Action Destroyed;
 
@@ -27,13 +30,13 @@ public class Entity : MonoBehaviour
         CollectCubes();
         RecalculateCubes();
     }
-    
+
     private void CollectCubes()
     {
-        transform.GetBounds(out _minPositionBound,out _maxPositionBound);
+        transform.GetBounds(out _minPositionBound, out _maxPositionBound);
         Vector3Int delta = Vector3Int.RoundToInt(_maxPositionBound - _minPositionBound);
         _cubesInfo = new int[delta.x + 1, delta.y + 1, delta.z + 1];
-        
+
         _cubesInfoStartPosition = _minPositionBound;
         _cubes = GetComponentsInChildren<Cube>();
 
@@ -110,11 +113,11 @@ public class Entity : MonoBehaviour
             foreach (int id in groups[i].Cubes)
             {
                 _cubes[id - 1].transform.parent = entity.transform;
+                _cubes[id - 1].Detouch();
             }
 
-            Entity entityResult =  entity.AddComponent<Entity>();
-            CreatedNewEntity?.Invoke(entityResult);
-            
+           // Entity entityResult = entity.AddComponent<Entity>();
+         //   CreatedNewEntity?.Invoke(entityResult);
         }
 
         CollectCubes();
@@ -123,7 +126,6 @@ public class Entity : MonoBehaviour
 
     public void DetouchCube(Cube cube)
     {
-        
         Vector3Int grid = GridPosition(cube.transform.localPosition);
         _cubesInfo[grid.x, grid.y, grid.z] = 0;
         _cubes[cube.Id - 1] = null;
@@ -132,7 +134,7 @@ public class Entity : MonoBehaviour
         var rb = cube.gameObject.AddComponent<Rigidbody>();
 
         RecalculateCubes();
-        
+
         if (cube.IsDestroyEntity)
         {
             Destroyed?.Invoke();
@@ -150,8 +152,7 @@ public class Entity : MonoBehaviour
             }
         }
     }
-    
-    
+
 
     private Vector3Int GridPosition(Vector3 localPosition)
     {
@@ -162,8 +163,8 @@ public class Entity : MonoBehaviour
     {
         Vector3Int gridPosition = position + direction;
         if (gridPosition.x < 0 || gridPosition.x >= _cubesInfo.GetLength(0)
-            || gridPosition.y < 0 || gridPosition.y >= _cubesInfo.GetLength(1)
-            || gridPosition.z < 0 || gridPosition.z >= _cubesInfo.GetLength(2))
+                               || gridPosition.y < 0 || gridPosition.y >= _cubesInfo.GetLength(1)
+                               || gridPosition.z < 0 || gridPosition.z >= _cubesInfo.GetLength(2))
             return 0;
 
         return _cubesInfo[gridPosition.x, gridPosition.y, gridPosition.z];
@@ -200,9 +201,9 @@ public class Entity : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawSphere(MaxPositionBound,0.3f);
+        Gizmos.DrawSphere(MaxPositionBound, 0.3f);
         Gizmos.color = Color.white;
-        Gizmos.DrawSphere(MinPositionBound,0.3f);
+        Gizmos.DrawSphere(MinPositionBound, 0.3f);
     }
 }
 

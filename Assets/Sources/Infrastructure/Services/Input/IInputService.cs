@@ -6,5 +6,7 @@ namespace Sources.Services.Input
     public interface IInputService : IService
     {
         event Action Clicked;
+        void Enable();
+        void Disable();
     }
 }
